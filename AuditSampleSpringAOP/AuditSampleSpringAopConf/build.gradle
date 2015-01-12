@@ -1,3 +1,44 @@
+apply plugin:'application'
+
+configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+	  if (details.requested.group == 'org.apache.tomcat.embed') {
+		  details.useVersion '8.0.14'
+	  }
+	}
+}
+
 dependencies {
 	compile project(':AuditSampleSpringAopCore')
 }
+
+mainClassName = "com.uimirror.showcase.audit.StartApp"
+
+jar {
+	manifest {
+		attributes "Implementation-Title": "UIM Show case"
+		attributes "Implementation-Vendor": "UIMIRROR"
+		attributes "Implementation-Version": project.version
+		attributes "Main-Class": mainClassName
+	}
+}
+
+description = "Spring AOP Show Case By Uimirror Team."
+applicationDefaultJvmArgs = ["-Denv=dev"
+	, "-DcontextSource=classpath:application"
+	, "-Dport=8080"
+	, "-Dnio.port=8443"
+	, "-Xmx64M"
+	, "-XX:MaxNewSize=2g"
+	, "-XX:NewSize=1g"
+	, "-XX:SurvivorRatio=16"
+	, "-XX:+UseParNewGC"
+	, "-XX:+UseConcMarkSweepGC"
+	, "-XX:MaxTenuringThreshold=0"
+	, "-XX:CMSInitiatingOccupancyFraction=60"
+	, "-XX:+CMSParallelRemarkEnabled"
+	, "-XX:+UseCMSInitiatingOccupancyOnly"
+	, "-XX:ParallelGCThreads=12"
+	, "-XX:LargePageSizeInBytes=256m"]
+
+defaultTasks 'clean', 'build', 'intsall'
