@@ -1,0 +1,6 @@
+rootProject.name = 'AuditSampleSpringAOP'
+include ':AuditSampleSpringAopCore'
+include ':AuditSampleSpringAopConf'
+
+project(':AuditSampleSpringAopCore').projectDir = "$rootDir/AuditSampleSpringAopCore" as File
+project(':AuditSampleSpringAopConf').projectDir = "$rootDir/AuditSampleSpringAopConf" as File
