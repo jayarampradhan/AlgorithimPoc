@@ -1,0 +1,99 @@
+subprojects  {
+	apply plugin: 'eclipse'
+	apply plugin: "java"
+	apply plugin: "maven"
+	apply plugin: 'maven-publish'
+	
+	repositories {
+		mavenCentral()
+		mavenLocal()
+	 }
+	ext {
+		slf4jVersion = "1.7.7"
+		qosLogBackVersion = "1.1.2"
+		springVersion = "4.1.4.RELEASE"
+		junitVersion = '4.11'
+		//gensonVersion = '1.1-RC2'
+		janinoVersion = '2.7.6'
+		mockitoVersion = '1.9.5'
+		cucumberJavaVersion = '1.2.0'
+		aspectVersion = '1.8.4'
+	}
+  
+	group = 'com.uimirror.showcase'
+	version = '1.0'
+  }
+subprojects {
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: junitVersion
+		testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
+		testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+		testCompile group: 'info.cukes', name: 'cucumber-java', version: cucumberJavaVersion
+		testCompile group: 'info.cukes', name: 'cucumber-junit', version: cucumberJavaVersion
+		testCompile group: 'info.cukes', name: 'cucumber-spring', version: cucumberJavaVersion
+		//Logging
+		compile (group: 'org.slf4j', name: 'jcl-over-slf4j', version: slf4jVersion)
+		compile (group: 'ch.qos.logback', name: 'logback-classic', version: qosLogBackVersion){
+			exclude group: 'org.slf4j', module: 'slf4j-api' //by both name and group
+		}
+		compile (group: 'ch.qos.logback', name: 'logback-core', version: qosLogBackVersion)
+		compile (group: 'org.codehaus.janino', name: 'janino', version: janinoVersion)
+		//Logging End
+		//Spring Start
+		compile (group: 'org.springframework', name: 'spring-core', version: springVersion)
+		compile (group: 'org.springframework', name: 'spring-context', version: springVersion)
+			//[group: 'org.springframework', name: 'spring-web', version: springVersion],
+		compile (group: 'org.springframework', name: 'spring-beans', version: springVersion)
+		compile (group: 'org.springframework', name: 'spring-expression', version: springVersion)
+		compile (group: 'org.springframework', name: 'spring-aop', version: springVersion)
+		//Spring End
+		
+		//Aspects
+		compile (group: 'org.aspectj', name: 'aspectjrt', version: aspectVersion)
+		compile (group: 'org.aspectj', name: 'aspectjweaver', version: aspectVersion)
+    }
+
+    version = '1.0'
+	description = "Audit Trail Using Spring AOP."
+	targetCompatibility = "1.6"
+	sourceCompatibility = "1.6"
+	
+    jar {
+        manifest.attributes provider: 'uimirror'
+    }
+	
+	//Gradle Wrapper genrator
+	task wrapper(type: Wrapper) {
+		gradleVersion = '2.0'
+	}
+}
+task copyScripts(type: Copy) {
+	from 'script'
+	into "$buildDir/scripts"
+}
+task copyDoc(type: Copy) {
+	from 'doc'
+	into "$buildDir/docs"
+}
+
+apply plugin: 'distribution'
+distributions {
+	main {
+		baseName = project.name
+		contents {
+			from { project(':AuditSampleSpringAopConf').installApp }
+			into('lib') {
+				from { project(':AuditSampleSpringAopConf').configurations.runtime }
+			}
+			into('docs'){
+				from { copyDoc}
+			}
+			into('scripts'){
+				fileMode = 0755
+				from { copyScripts }
+			}
+			duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+		}
+	}
+}
