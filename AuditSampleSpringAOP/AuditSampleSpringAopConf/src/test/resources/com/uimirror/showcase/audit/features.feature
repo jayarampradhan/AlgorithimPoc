@@ -15,6 +15,7 @@ Feature: Auditing Method Invocation
 
   Scenario Outline: Query Data Base
     And I press "2"
+    And I lunch the application
     And I gave primary key as "<id>"
     Then I got response as "<time>", "<msg>"
 
@@ -25,4 +26,5 @@ Feature: Auditing Method Invocation
 
   Scenario: Exit The Luncher
     And I press "3"
+    And I lunch the application
     Then Log Says "I am closing Bye Bye"
