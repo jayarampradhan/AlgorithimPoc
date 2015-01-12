@@ -16,7 +16,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.uimirror.showcase.audit.core.db.UimInMemory;
 
@@ -39,6 +38,7 @@ public class AuditAspect {
             AuditData afterData = new AuditData.AuditDataBuilder().addMessage("After").addMethodName(methodName).build();
             String id = UimInMemory.db.saveById(null, afterData);
             LOG.info("After data ID: "+id);
+            LOG.info("Service Executed and Audit performed");
             return proceed;
         } finally {
             LOG.debug("[AOP-END]-Finally Returned");

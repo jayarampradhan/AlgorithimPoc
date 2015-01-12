@@ -10,16 +10,20 @@
  *******************************************************************************/
 package com.uimirror.showcase.audit.conf;
 
+import java.util.Scanner;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+import com.uimirror.showcase.audit.Luncher;
 import com.uimirror.showcase.audit.core.AuditAspect;
+import com.uimirror.showcase.audit.core.InputProvider;
 import com.uimirror.showcase.audit.core.SomeService;
 
 /**
- * @author 096068
+ * @author Jay
  *
  */
 @Configuration
@@ -35,5 +39,20 @@ public class AuditBeans {
 	@Bean
 	public AuditAspect auditAspect(){
 		return new AuditAspect();
+	}
+	
+	@Bean
+	public Luncher luncher(){
+		return new Luncher();
+	}
+	
+	@Bean
+	public Scanner scanner(){
+		return new Scanner(System.in); 
+	}
+	
+	@Bean
+	public InputProvider input(){
+		return new InputProvider();
 	}
 }
