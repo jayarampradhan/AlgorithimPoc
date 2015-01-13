@@ -28,6 +28,7 @@ public class Luncher {
 	protected static final Logger LOG = LoggerFactory.getLogger(Luncher.class);
 	private @Autowired SomeService someService;
 	private @Autowired InputProvider input; 
+	private @Autowired UimInMemory uimInMemory;
 	
 	public void lunchApp(){
 		LOG.info("[START]- Application Started Play with it");   
@@ -43,7 +44,7 @@ public class Luncher {
 			case 2:
 				System.out.println("Enter The Primary Key/ ID:");
 				id = input.inputString();
-				Object queryBiId = UimInMemory.db.queryBiId(id);
+				Object queryBiId = uimInMemory.queryBiId(id);
 				System.out.println(queryBiId);
 				break;
 			default:

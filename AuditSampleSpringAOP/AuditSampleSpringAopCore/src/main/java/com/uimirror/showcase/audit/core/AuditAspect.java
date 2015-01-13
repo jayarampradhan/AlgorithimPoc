@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.uimirror.showcase.audit.core.db.UimInMemory;
 
@@ -23,6 +24,7 @@ import com.uimirror.showcase.audit.core.db.UimInMemory;
 public class AuditAspect {
 	
 	protected static final Logger LOG = LoggerFactory.getLogger(AuditAspect.class);
+	private @Autowired UimInMemory uimInMemory;
 
 	@Around("execution(* *(..)) && @annotation(audit)")
 	public Object auditIt(ProceedingJoinPoint joinPoint, Audit audit) throws Throwable {
@@ -31,12 +33,12 @@ public class AuditAspect {
 		Signature signature = joinPoint.getSignature();
 		String methodName = signature.getName();
 		AuditData beforeData = new AuditData.AuditDataBuilder().addMessage("Before").addMethodName(methodName).build();
-		String beforeId = UimInMemory.db.saveById(null, beforeData);
+		String beforeId = uimInMemory.saveById(null, beforeData);
 		LOG.info("Before data ID: "+beforeId);
 		try {
 			Object proceed = joinPoint.proceed();
             AuditData afterData = new AuditData.AuditDataBuilder().addMessage("After").addMethodName(methodName).build();
-            String id = UimInMemory.db.saveById(null, afterData);
+            String id = uimInMemory.saveById(null, afterData);
             LOG.info("After data ID: "+id);
             LOG.info("Service Executed and Audit performed");
             return proceed;

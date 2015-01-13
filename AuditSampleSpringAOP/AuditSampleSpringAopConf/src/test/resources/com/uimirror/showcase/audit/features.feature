@@ -6,17 +6,18 @@ Feature: Auditing Method Invocation
       | id | time   | method   | msg    |
       | 1  | 123456 | sayHello | Before |
       | 2  | 123457 | sayHello | After  |
-    
 
   Scenario: Run The Service
-    And I press "1"
+    And I will press "1"
+    And I will press "3"
     And I lunch the application
     Then Log Says "Service Executed and Audit performed"
 
   Scenario Outline: Query Data Base
-    And I press "2"
-    And I lunch the application
+    And I will press "2" to query db
     And I gave primary key as "<id>"
+    And I will press "3"
+    And I lunch the application
     Then I got response as "<time>", "<msg>"
 
     Examples: 
@@ -25,6 +26,6 @@ Feature: Auditing Method Invocation
       | 2  | 123457 | After  |
 
   Scenario: Exit The Luncher
-    And I press "3"
+    And I will press "3"
     And I lunch the application
-    Then Log Says "I am closing Bye Bye"
+    Then Log Says "[END]- I am closing Bye bye"

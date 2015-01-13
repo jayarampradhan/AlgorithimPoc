@@ -26,11 +26,6 @@ public class UimInMemory {
 		concurrentMap = new ConcurrentHashMap<String, Object>(20);
 	}
 	private static final ConcurrentMap<String, Object> concurrentMap;
-	//Singleton instance
-	public static final UimInMemory db = new UimInMemory(); 
-	private UimInMemory(){
-		//NOP
-	}
 	
 	/**
 	 * When you want to query for to DB use the id to get the DB details.

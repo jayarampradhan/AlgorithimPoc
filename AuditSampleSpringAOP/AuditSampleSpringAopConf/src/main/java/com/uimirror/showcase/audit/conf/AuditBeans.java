@@ -21,6 +21,7 @@ import com.uimirror.showcase.audit.Luncher;
 import com.uimirror.showcase.audit.core.AuditAspect;
 import com.uimirror.showcase.audit.core.InputProvider;
 import com.uimirror.showcase.audit.core.SomeService;
+import com.uimirror.showcase.audit.core.db.UimInMemory;
 
 /**
  * @author Jay
@@ -54,5 +55,10 @@ public class AuditBeans {
 	@Bean
 	public InputProvider input(){
 		return new InputProvider();
+	}
+	
+	@Bean
+	public UimInMemory uimInMemory(){
+		return new UimInMemory();
 	}
 }
