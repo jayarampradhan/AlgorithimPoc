@@ -9,11 +9,11 @@ This is a sample show case project, demonstrating Spring @Arround advice
 
 **Stacks**
 =================================================================
-1- Spring 4.x
-2- Java 1.8
-3- Cucumber 1.2.0
+- Spring 4.x
+- Java 1.8
+- Cucumber 1.2.0
 
 **Steps To Run**
 ================================================================
-1- Check Out Project
-2- run gradlew build test 
+- Check Out Project
+- run gradlew build test 
