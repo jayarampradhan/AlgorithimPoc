@@ -23,6 +23,25 @@ jar {
 	}
 }
 
+	jacoco {
+		applyTo run
+	}
+
+	task applicationCodeCoverageReport(type:JacocoReport){
+		executionData run
+		sourceSets sourceSets.main
+		//executionData integrationTest
+	}
+	
+	jacocoTestReport {
+		reports {
+			xml.enabled true
+			csv.enabled false
+			html.destination "${buildDir}/coverage"
+		}
+	}
+
+
 description = "Spring AOP Show Case By Uimirror Team."
 applicationDefaultJvmArgs = ["-Denv=dev"
 	, "-DcontextSource=classpath:application"
@@ -41,4 +60,4 @@ applicationDefaultJvmArgs = ["-Denv=dev"
 	, "-XX:ParallelGCThreads=12"
 	, "-XX:LargePageSizeInBytes=256m"]
 
-defaultTasks 'clean', 'build', 'intsall'
+defaultTasks 'clean', 'build', 'run'
