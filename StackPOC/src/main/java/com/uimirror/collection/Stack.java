@@ -96,6 +96,15 @@ public class Stack<E> {
 		return obj;
 	}
 	
+	
+	/**
+	 * Returns the current Size of the Stack
+	 * @return size of the stack
+	 */
+	public synchronized int getSize(){
+		return elementCount;
+	}
+	
 	/**
 	 * Reads the top elemnet from the Stack
 	 * @return the top element
